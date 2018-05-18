@@ -5,4 +5,4 @@ Deze plugin is nog lang niet af! :D
 
 ###Compling
 
-sbt clean assembly
+Run `sbt clean assembly` en de fat jar komt in je /target map!
