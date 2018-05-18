@@ -1,0 +1,34 @@
+name: RSTrade
+main: xyz.janboerman.rstrade.RSTrade
+version: 0.1
+author: Jannyboy11
+
+softdepend: ["vault"]
+
+commands:
+  trade:
+    description: "Trade with another player"
+    usage: "/trade <playerName>"
+    aliases: ["rstrade", "tr", "rstr"]
+    permission: "rstrade.trade"
+  acceptTrade:
+    description: "Accept a trade request from another player"
+    usage: "/acceptTrade <playerName>"
+    aliases: ["rsaccepttrade", "accepttr", "rsaccepttr", "atr", "rsatr"]
+    permission: "rstrade.accept"
+  declineTrade:
+    description: "Declines a trade request from another player"
+    usage: "/declineTrade <playerName>"
+    aliases: ["rsdeclinetrade", "declinetr", "rsdeclinetr", "dtr", "rsdtr"]
+    permission: "rstrade.decline"
+
+permissions:
+  rstrade.trade:
+    description: Allows access to /trade
+    default: true
+  rstrade.accept:
+    descrption: Allows access to /acceptTrade
+    default: true
+  rstrade.decline:
+    description: Allows access to /declineTrade
+    default: true
