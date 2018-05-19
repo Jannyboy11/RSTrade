@@ -11,9 +11,10 @@ class RSTrade extends JavaPlugin {
     lazy val economy : Option[Economy] = checkEconomy()
 
     private def checkEconomy(): Option[Economy] = {
-        Option(getServer.getPluginManager.getPlugin("Vault")).flatMap(_ =>
-            Option(getServer.getServicesManager.getRegistration(classOf[Economy])).map(_.getProvider)
-        )
+        for {
+            _ <- Option(getServer.getPluginManager.getPlugin("Vault"))
+            economyRegistration <- Option(getServer.getServicesManager.getRegistration(classOf[Economy]))
+        } yield economyRegistration.getProvider
     }
 
     override def onEnable() = {
