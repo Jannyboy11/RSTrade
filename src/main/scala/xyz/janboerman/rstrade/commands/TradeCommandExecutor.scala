@@ -7,7 +7,7 @@ import xyz.janboerman.rstrade.compat.newTradeInventories
 
 //TODO I might depend on ACF? :-)
 //TODO I kinda wanna do it, just to show off it works with Scala :-)
-class TradeCommandExecutor extends CommandExecutor {
+object TradeCommandExecutor extends CommandExecutor {
     override def onCommand(sender: CommandSender, command: Command, label: String, args: Array[String]): Boolean = {
         sender match {
             case player : Player => args match {

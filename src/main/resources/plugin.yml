@@ -11,6 +11,11 @@ commands:
     usage: "/trade <playerName>"
     aliases: ["rstrade", "tr", "rstr"]
     permission: "rstrade.trade"
+  requestTrade:
+    description: "Send a player a trade request"
+    usage: "/requestTrade <playerName>"
+    aliases: ["rsrequesttrade", "requesttr", "rsrequesttr", "rtr", "rsrtr"]
+    permission: "rstrade.request"
   acceptTrade:
     description: "Accept a trade request from another player"
     usage: "/acceptTrade <playerName>"
@@ -25,6 +30,9 @@ commands:
 permissions:
   rstrade.trade:
     description: Allows access to /trade
+    default: op
+  rstrade.request:
+    descrption: Allows access to /requestTrade
     default: true
   rstrade.accept:
     descrption: Allows access to /acceptTrade

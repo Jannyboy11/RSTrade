@@ -4,7 +4,7 @@
 		module="rstrade-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180511212739"
+		publication="20180621174857"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>
