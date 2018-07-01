@@ -15,4 +15,8 @@ libraryDependencies ++= Seq(
     "net.milkbowl.vault" % "VaultAPI" % "1.6" % "provided"
 )
 
+assemblyShadeRules in assembly := Seq(
+    ShadeRule.rename("scala.**" -> "xyz.janboerman.rstrade.scala.@1").inAll
+)
+
 assemblyJarName in assembly := "RSTrade.jar"
