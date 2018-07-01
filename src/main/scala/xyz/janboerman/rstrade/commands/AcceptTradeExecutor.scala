@@ -19,7 +19,7 @@ object AcceptTradeExecutor extends PlayerOnlyCommandExecutor {
                     }
 
                     //check whether the other player doesn't have an inventory opened
-                    if (!otherPlayer.isBusy()) {
+                    if (otherPlayer.isBusy()) {
                         player.sendMessage(otherPlayer.getName + " is currently busy.")
                         return true
                     }

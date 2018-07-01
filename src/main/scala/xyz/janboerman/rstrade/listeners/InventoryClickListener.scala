@@ -13,7 +13,9 @@ class InventoryClickListener(implicit val plugin : RSTrade) extends Listener {
         event.getView.getTopInventory match {
             case _ : TradeInventory => event.getWhoClicked match {
                 case player : Player => player.getServer.getScheduler.runTask(plugin, () => player.updateInventory())
+                case _ => ()
             }
+            case _ => ()
         }
     }
 

@@ -15,6 +15,8 @@ object InventoryDecorator {
 
         //Iterable
         implicit override def iterator(): Iterator[ItemStack] = JavaConverters.asScalaIterator(inventory.iterator())
+
+        implicit def isTradeInventory(): Boolean = inventory.isInstanceOf[TradeInventory]
     }
 }
 

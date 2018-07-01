@@ -7,5 +7,6 @@
 .idea/*
 *.iml
 
+#sbt
 target/*
 project/target/*

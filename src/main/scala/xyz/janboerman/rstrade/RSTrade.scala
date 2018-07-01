@@ -15,22 +15,27 @@ object RSTrade {
 }
 
 class RSTrade extends JavaPlugin {
-    private lazy implicit val instance = this
     RSTrade.setInstance(this)
+
+    private lazy implicit val instance = this
 
     lazy val economy : Option[Economy] = checkEconomy()
 
     private def checkEconomy(): Option[Economy] = {
+        //TODO create extension methods for Server and ServicesManager so that they return Option instead? :D
         for {
             _ <- Option(getServer.getPluginManager.getPlugin("Vault"))
             economyRegistration <- Option(getServer.getServicesManager.getRegistration(classOf[Economy]))
         } yield economyRegistration.getProvider
     }
 
-    override def onEnable() = {
+    override def onEnable(): Unit = {
         val pluginManager = getServer.getPluginManager
 
+        //TODO create extension methods for PluginManager so that I don't need to pass the plugin instance?
         pluginManager.registerEvents(new InventoryClickListener(), this)
+        pluginManager.registerEvents(new InventoryCloseListener(), this)
+        pluginManager.registerEvents(new PlayerPickupItemListener(), this)
 
         getCommand("trade").setExecutor(TradeCommandExecutor) //TODO remove this
         getCommand("requestTrade").setExecutor(RequestTradeExecutor)
