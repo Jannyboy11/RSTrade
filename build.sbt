@@ -23,7 +23,7 @@ assemblyShadeRules in assembly := Seq(
 )
 
 assemblyMergeStrategy in assembly := {
-    case "plugin.yml"   => MergeStrategy.discard
+    case "plugin.yml"   => MergeStrategy.first
     case x              =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)
