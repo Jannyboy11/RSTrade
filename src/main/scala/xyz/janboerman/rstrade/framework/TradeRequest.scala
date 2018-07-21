@@ -37,10 +37,10 @@ object TradeRequest {
         incomingTradeRequests.get(target).exists(_ contains from)
 
     private def removeRequest(tradeRequest: TradeRequest): Boolean = {
-        val yolo = incomingTradeRequests.get(tradeRequest.target)
-        val swag = outgoingTradeRequests.get(tradeRequest.initiator)
+        val incoming = incomingTradeRequests.get(tradeRequest.target)
+        val outgoing = outgoingTradeRequests.get(tradeRequest.initiator)
 
-        (yolo, swag) match {
+        (incoming, outgoing) match {
             case (Some(initiators), Some(targets)) if initiators.get(tradeRequest.initiator) == targets.get(tradeRequest.target) =>
                 initiators.remove(tradeRequest.initiator)
                 initiators.remove(tradeRequest.target)
@@ -91,6 +91,8 @@ object TradeRequest {
 
         return tradeRequest
     }
+
+    def unapply(arg: TradeRequest): Option[(Requester, Accepter)] = Some(arg.initiator, arg.target)
 }
 import TradeRequest.{Requester, Accepter}
 

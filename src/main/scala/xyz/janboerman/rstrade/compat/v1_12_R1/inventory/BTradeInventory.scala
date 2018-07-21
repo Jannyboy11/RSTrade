@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.InventorySubcontainer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftInventory
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import xyz.janboerman.rstrade.RSTrade
 
 object BTradeInventory {
 
@@ -13,13 +14,19 @@ object BTradeInventory {
     private val buttons = new InventorySubcontainer(null, false, TradeInventory.SubHeigth)
 
     def make(playerOne : Player, playerTwo : Player) : (BTradeInventory, BTradeInventory) = {
-        val offersOne = new InventorySubcontainer(null, false, TradeInventory.SubHeigth * TradeInventory.SubWidth, playerOne)
-        val offersTwo = new InventorySubcontainer(null, false, TradeInventory.SubHeigth * TradeInventory.SubWidth, playerTwo)
+        val offersOne = new InventorySubcontainer(/*custom name*/null, /*hasCustomName*/false, TradeInventory.SubSize, /*InventoryHolder*/playerOne)
+        val offersTwo = new InventorySubcontainer(/*custom name*/null, /*hasCustomName*/false, TradeInventory.SubSize, /*InventoryHolder*/playerTwo)
 
-        val nmsInvOne = new TradeInventory("Trading with " + playerTwo.getName, playerOne, offersOne, offersTwo, buttons)
-        val nmsInvTwo = new TradeInventory("Trading with " + playerOne.getName, playerTwo, offersTwo, offersOne, buttons)
+        val nmsInvOne = new TradeInventory("Trading with " + playerTwo.getName, /*inventoyr holder will be provided later*/null, offersOne, offersTwo, buttons)
+        val nmsInvTwo = new TradeInventory("Trading with " + playerOne.getName, /*inventoyr holder will be provided later*/null, offersTwo, offersOne, buttons)
 
-        (nmsInvOne.bukkitInventory, nmsInvTwo.bukkitInventory)
+        val bukkitInvOne = nmsInvOne.bukkitInventory
+        val bukkitInvTwo = nmsInvTwo.bukkitInventory
+
+        nmsInvOne.tradeInventoryHolder = new TradeHolder(RSTrade.getInstance(), bukkitInvOne)
+        nmsInvTwo.tradeInventoryHolder = new TradeHolder(RSTrade.getInstance(), bukkitInvTwo)
+
+        (bukkitInvOne, bukkitInvTwo)
     }
 }
 
@@ -36,5 +43,5 @@ class BTradeInventory private[inventory] (nmsTradeInventory : TradeInventory) ex
     override def getOtherOffers() = bukkitOtherOffers
     override def getButtons() = bukkitButtons
 
-    override def foreach[U](f: ItemStack => U) = for (itemStack <- getContents) f(itemStack)
+    override def foreach[U](f: ItemStack => U): Unit = for (itemStack <- getContents) f(itemStack)
 }

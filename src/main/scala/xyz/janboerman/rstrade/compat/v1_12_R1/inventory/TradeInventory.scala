@@ -33,15 +33,14 @@ object TradeInventory {
     }
 }
 
-class TradeInventory(val name : String, val inventoryHolder: InventoryHolder,
+class TradeInventory(val name : String, protected[inventory] var tradeInventoryHolder: TradeHolder,
                      val myOffers : IInventory, val otherOffers : IInventory, val buttons : IInventory)
-    extends IInventory with ITileEntityContainer
-    with Traversable[ItemStack] with Iterable[ItemStack] with IndexedSeq[ItemStack] {
+    extends IInventory with ITileEntityContainer {
 
     lazy val bukkitInventory = new BTradeInventory(this)
 
     // Handy helper method
-    private def decideWhichInventory(index : Index) : (IInventory, Index) = {
+    private def decideWhichInventory(index : Index): (IInventory, Index) = {
         val (columnNumber, rowNumber) = break(index)
 
         if (columnNumber < SplitColumn) (myOffers, rowNumber * SubWidth + columnNumber)
@@ -56,7 +55,7 @@ class TradeInventory(val name : String, val inventoryHolder: InventoryHolder,
 
     override def getMaxStackSize: Int = maxStackSize
 
-    override def getOwner: InventoryHolder = inventoryHolder
+    override def getOwner: InventoryHolder = tradeInventoryHolder
 
     override def getLocation: Location = null
 
@@ -164,15 +163,4 @@ class TradeInventory(val name : String, val inventoryHolder: InventoryHolder,
 
     override def getScoreboardDisplayName: IChatBaseComponent =
         if (hasCustomName) new ChatComponentText(getName) else new ChatMessage(null)
-
-
-    //Scala Traits
-
-    override def foreach[U](f: ItemStack => U): Unit = for (itemStack <- iterator()) f(itemStack)
-
-    override def iterator(): Iterator[ItemStack] = JavaConverters.asScalaIterator(getContents.iterator())
-
-    override def apply(index : Int): ItemStack = getItem(index)
-
-    override def length(): Int = getSize
 }
