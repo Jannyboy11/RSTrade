@@ -28,11 +28,12 @@ class InventoryCloseListener(implicit val plugin: RSTrade) extends Listener {
                     }
                 }
 
-            case confirmInventory: Inventory if confirmInventory.getHolder.isInstanceOf[AreYouSureGuiHolder] =>
-                val areYouSureGuiHolder = confirmInventory.getHolder.asInstanceOf[AreYouSureGuiHolder]
-
-                if (!areYouSureGuiHolder.isAccepted())
-                    areYouSureGuiHolder.myOffers.giveTo(event.getPlayer.asInstanceOf[Player])
+                //commented out because when the confirm gui is open, the player got back his items already.
+//            case confirmInventory: Inventory if confirmInventory.getHolder.isInstanceOf[AreYouSureGuiHolder] =>
+//                val areYouSureGuiHolder = confirmInventory.getHolder.asInstanceOf[AreYouSureGuiHolder]
+//
+//                if (!areYouSureGuiHolder.isAccepted())
+//                    areYouSureGuiHolder.myOffers.giveTo(event.getPlayer.asInstanceOf[Player])
 
             case _ => ()
         }
