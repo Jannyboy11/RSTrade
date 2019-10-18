@@ -24,7 +24,12 @@ class AreYouSureGuiHolder private(val myPlayer: Player,
                                   val myOffers: Offers[_],
                                   val otherOffers: Offers[_])
                                  (implicit plugin: RSTrade)
-    extends MenuHolder[RSTrade](plugin, Math.max(2, Math.max(myOffers.getIcons().size / 4, otherOffers.getIcons().size / 4) + 1) * 9, "Are you sure?") {
+    extends MenuHolder[RSTrade](plugin, {
+        val items = Math.max(myOffers.getIcons().size, otherOffers.getIcons().size);
+        var rows = items / 4
+        if (items % 4 != 0) rows += 1
+        Math.max(2, rows) * 9
+    }, "Are you sure?") {
 
 
     def close(): Unit = {
@@ -39,9 +44,9 @@ class AreYouSureGuiHolder private(val myPlayer: Player,
         otherPlayer.getOpenInventory match {
             case view: InventoryView if view.getTopInventory.getHolder.isInstanceOf[AreYouSureGuiHolder] =>
                 val otherConfirmScreen = view.getTopInventory.getHolder.asInstanceOf[AreYouSureGuiHolder]
-                if (otherConfirmScreen.otherPlayer == myPlayer
-                    && otherConfirmScreen.otherOffers == myOffers
-                    && otherConfirmScreen.myOffers == otherOffers) {
+                if (otherConfirmScreen.otherPlayer.eq(myPlayer)
+                    && otherConfirmScreen.otherOffers.eq(myOffers)
+                    && otherConfirmScreen.myOffers.eq(otherOffers)) {
                     view.close()
                 }
             case _ => ()

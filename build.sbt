@@ -22,14 +22,12 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-    //"org.scala-lang" % "scala-library" % ScalaVer,
-
     "org.spigotmc" % "spigot" % "1.12.2-R0.1-SNAPSHOT" % "provided",    //TODO update to just 1.15.0?
     "net.milkbowl.vault" % "VaultAPI" % "1.7" % "provided",
     "com.github.Jannyboy11.GuiLib" % "GuiLib-API" % "v1.9.2",
 )
 
-//assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = true)
+//assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false) //uncomment when the scala library is accessible to the plugin's classloader
 
 assemblyShadeRules in assembly := Seq(
     ShadeRule.rename("scala.**" -> "com.janboerman.rstrade.scala.@1").inAll,

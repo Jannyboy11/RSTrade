@@ -2,6 +2,7 @@ name: RSTrade
 main: com.janboerman.rstrade.RSTrade
 version: 0.1
 author: Jannyboy11
+description: Trading as in Runescape, implemented for Minecraft
 
 softdepend: ["Vault"]
 

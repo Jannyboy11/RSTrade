@@ -1,6 +1,7 @@
-# RSTrade
+# RSTrade [WIP]
 
-One on one trading in Minecraft!
+One-on-one trading in Minecraft!
+
 
 ### Compiling
 
@@ -9,3 +10,6 @@ One on one trading in Minecraft!
 - [SBT](https://www.scala-sbt.org/download.html)
 
 Run `sbt assembly` and the deployable jar will be in your ./target/scala-2.13 folder!
+
+### Supported Minecraft versions:
+- Spigot 1.12.2
