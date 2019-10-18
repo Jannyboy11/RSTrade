@@ -5,7 +5,7 @@ import com.janboerman.rstrade._
 import com.janboerman.rstrade.framework.TradePlayer._
 import com.janboerman.rstrade.compat.TradeInventory
 import com.janboerman.rstrade.framework.Offers
-import org.bukkit.event.inventory.{InventoryClickEvent, InventoryCloseEvent, InventoryDragEvent, InventoryOpenEvent}
+import org.bukkit.event.inventory.{InventoryClickEvent, InventoryDragEvent, InventoryOpenEvent}
 import xyz.janboerman.guilib.api.GuiInventoryHolder
 
 class TradeGuiHolder(plugin: RSTrade, tradeInventory: TradeInventory) extends GuiInventoryHolder(plugin, tradeInventory) {
@@ -22,10 +22,6 @@ class TradeGuiHolder(plugin: RSTrade, tradeInventory: TradeInventory) extends Gu
             inventory.setItem(49, Buttons.CancelStack)
             firstTimeOpen = false
         }
-    }
-
-    override def onClose(event: InventoryCloseEvent): Unit = {
-        getInventory().isAccepted = false
     }
 
     override def onDrag(event: InventoryDragEvent): Unit = {
@@ -48,6 +44,9 @@ class TradeGuiHolder(plugin: RSTrade, tradeInventory: TradeInventory) extends Gu
                     inventory.isAccepted = true
 
                     if (inventory.isOtherAccepted) {
+                        val myOffers = Offers(inventory.getMyOffers.filter(_ != null).toList)
+                        val otherOffers = Offers(inventory.getOtherOffers.filter(_ != null).toList)
+
                         plugin.getServer.getScheduler.runTask(plugin, new Runnable {
                             override def run(): Unit = {
                                 myPlayer.closeInventory()
@@ -55,8 +54,6 @@ class TradeGuiHolder(plugin: RSTrade, tradeInventory: TradeInventory) extends Gu
 
                                 plugin.getServer.getScheduler.runTask(plugin, new Runnable {
                                     override def run(): Unit = {
-                                        val myOffers = Offers(inventory.getMyOffers.filter(_ != null).toList)
-                                        val otherOffers = Offers(inventory.getOtherOffers.filter(_ != null).toList)
                                         implicit val rsTrade: RSTrade = plugin
 
                                         val (areYouSureOne, areYouSureTwo) = AreYouSureGuiHolder(myPlayer, otherPlayer, myOffers, otherOffers)
@@ -79,7 +76,7 @@ class TradeGuiHolder(plugin: RSTrade, tradeInventory: TradeInventory) extends Gu
                         }
                     })
 
-                case _ => ()
+                case _ => inventory.isAccepted = false
             }
         }
     }

@@ -67,7 +67,7 @@ class AreYouSureGuiHolder private(val myPlayer: Player,
         unsetButton(confirmIndex)
     }
 
-
+    def isAccepted(): Boolean = hasAccepted && otherPlayerHasAccepted
 
     override def onOpen(event: InventoryOpenEvent): Unit = {
         val myOffersIndices = (0 to 5).flatMap(y => (0 to 3).map(x => 9 * y + x))
@@ -76,7 +76,7 @@ class AreYouSureGuiHolder private(val myPlayer: Player,
         myOffers.getIcons().zip(myOffersIndices).foreach { case (icon, idx) => setButton(idx, new ItemButton(icon)) }
         otherOffers.getIcons().zip(otherOffersIncides).foreach { case (icon, idx) => setButton(idx, new ItemButton(icon)) }
 
-        setButton(confirmIndex, YesImSureButton)
+        setButton(confirmIndex, new YesImSureButton())
         setButton(cancelIndex, NoImUnsureButton)
     }
 

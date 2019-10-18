@@ -1,50 +1,60 @@
 package com.janboerman.rstrade.gui
 
-import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.inventory.ItemStack
-import xyz.janboerman.guilib.api.ItemBuilder
 import xyz.janboerman.guilib.api.menu.ItemButton
 
-
-//TODO can be an object singleton?
-object YesImSureButton extends ItemButton[AreYouSureGuiHolder](Buttons.ConfirmStack) {
+class YesImSureButton() extends ItemButton[AreYouSureGuiHolder](Buttons.ConfirmStack) {
     var isClickSuccess = false
 
     override def onClick(holder: AreYouSureGuiHolder, event: InventoryClickEvent): Unit = {
-        if (holder.otherPlayerHasAccepted) {
-            val myPlayer = holder.myPlayer
-            val myOffers = holder.myOffers
-            val otherPlayer = holder.otherPlayer
-            val otherOffers = holder.otherOffers
+        if (!isClickSuccess) {
 
-            if (otherOffers.withdrawFrom(otherPlayer)) {
-                if (myOffers.withdrawFrom(myPlayer)) {
+            if (holder.otherPlayerHasAccepted) {
+                val myPlayer = holder.myPlayer
+                val myOffers = holder.myOffers
+                val otherPlayer = holder.otherPlayer
+                val otherOffers = holder.otherOffers
 
-                    if (!isClickSuccess) {
+                if (otherOffers.canGiveTo(myPlayer)) {
+                    if (myOffers.canGiveTo(otherPlayer)) {
+                        if (myOffers.canWidthDrawFrom(myPlayer)) {
+                            if (otherOffers.canWidthDrawFrom(otherPlayer)) {
+                                isClickSuccess = true //prevent multiple transfers
+                                holder.setAccepted() //prevent duping through the InventoryClose listener
+
+                                myOffers.withDrawFrom(myPlayer)
+                                otherOffers.withDrawFrom(otherPlayer)
+
+                                myOffers.giveTo(otherPlayer)
+                                otherOffers.giveTo(myPlayer)
+
+                                myPlayer.sendMessage("Trade successful!")
+                                otherPlayer.sendMessage("Trade successful!")
+                                close(holder)
+                            } else {
+                                myPlayer.sendMessage("The other player does not have enough resources")
+                                otherPlayer.sendMessage("You don't have enough resources")
+                                close(holder)
+                            }
+                        } else {
+                            otherPlayer.sendMessage("The other player does not have enough resources")
+                            myPlayer.sendMessage("You don't have enough resources")
+                            close(holder)
+                        }
+                    } else {
+                        myPlayer.sendMessage("The other player does not have enough room to accept your offers")
+                        otherPlayer.sendMessage("You don't have enough room to accept the other player's offers")
                         close(holder)
-
-                        //TODO this does not seem to work. rework rewards work.
-                        holder.myOffers.giveTo(holder.otherPlayer)
-                        holder.otherOffers.giveTo(holder.myPlayer)
-                        isClickSuccess = true //prevent duplication
                     }
                 } else {
-                    //my player could not withdraw
-                    //TODO send a message 'you don't have enough resources'
-
+                    myPlayer.sendMessage("You don't have enough room to accept the other player's offers")
+                    otherPlayer.sendMessage("The other player does not have enough room to accept your offers")
                     close(holder)
                 }
             } else {
-                //other player could not withdraw
-                //TODO send a message 'the other player did not have enough resources'
-
-                close(holder)
+                holder.setAccepted() //also unsets the accept-button
+                event.getWhoClicked.sendMessage("Waiting for other player..")
             }
-
-        } else {
-            holder.setAccepted() //also unsets the accept-button
-            event.getWhoClicked.sendMessage("Waiting for other player..")
         }
     }
 

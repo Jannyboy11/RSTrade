@@ -14,7 +14,7 @@ class TradeCommandExecutor(implicit plugin: RSTrade) extends CommandExecutor {
                 case Array(playerName, _*) => {
                     val otherPlayer = sender.getServer.getPlayerExact(playerName)
                     if (otherPlayer == null) {
-                        sender.sendMessage("Player " + otherPlayer + " is not online.")
+                        sender.sendMessage(s"Player $playerName is not online.")
                     } else {
 
                         //TODO check if the player can see the target player

@@ -4,7 +4,7 @@ import com.janboerman.rstrade.RSTrade
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.{ClickEvent, TextComponent}
 import net.md_5.bungee.api.chat.ClickEvent.Action
-import org.bukkit.entity.{HumanEntity, Player}
+import org.bukkit.entity.Player
 import org.bukkit.event.{EventPriority, HandlerList, Listener}
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.scheduler.BukkitTask
