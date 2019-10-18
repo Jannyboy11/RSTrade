@@ -1,25 +1,39 @@
-name := "RSTrade"
-version := "0.1"
-organization := "xyz.janboerman"
+import java.util.Locale
 
-scalaVersion := "2.12.6"
+val Name = "RSTrade"
+val Version = "0.1"
+val Organisation = "com.janboerman"
+val ScalaVer = "2.13.1"
+
+name := Name
+version := Version
+organization := Organisation
+scalaVersion := ScalaVer
+
 scalacOptions += "-language:implicitConversions"
 
-resolvers += "vault-repo" at "http://nexus.hc.to/content/repositories/pub_releases"
-resolvers += "jitpack" at "https://jitpack.io"
-resolvers += Resolver.mavenLocal
+packageOptions in (Compile, packageBin) +=
+    Package.ManifestAttributes(("Automatic-Module-Name", Organisation + "." + Name.toLowerCase(Locale.ROOT)))
 
-libraryDependencies ++= Seq(
-    "org.scala-lang" % "scala-library" % "2.12.6",
-
-    "org.spigotmc" % "spigot" % "1.12.2-R0.1-SNAPSHOT" % "provided",
-    "net.milkbowl.vault" % "VaultAPI" % "1.6" % "provided",
-    "com.github.Jannyboy11" % "GuiLib" % "v1.3.4"
+resolvers ++= Seq(
+    "vault-repo" at "http://nexus.hc.to/content/repositories/pub_releases",
+    "jitpack" at "https://jitpack.io",
+    Resolver.mavenLocal,
 )
 
+libraryDependencies ++= Seq(
+    //"org.scala-lang" % "scala-library" % ScalaVer,
+
+    "org.spigotmc" % "spigot" % "1.12.2-R0.1-SNAPSHOT" % "provided",    //TODO update to just 1.15.0?
+    "net.milkbowl.vault" % "VaultAPI" % "1.7" % "provided",
+    "com.github.Jannyboy11.GuiLib" % "GuiLib-API" % "v1.9.2",
+)
+
+//assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = true)
+
 assemblyShadeRules in assembly := Seq(
-    ShadeRule.rename("scala.**" -> "xyz.janboerman.rstrade.scala.@1").inAll,
-    ShadeRule.rename("xyz.janboerman.guilib.**" -> "xyz.janboerman.rstrade.guilib.@1").inAll
+    ShadeRule.rename("scala.**" -> "com.janboerman.rstrade.scala.@1").inAll,
+    ShadeRule.rename("xyz.janboerman.guilib.**" -> "com.janboerman.rstrade.guilib.@1").inAll
 )
 
 assemblyMergeStrategy in assembly := {
@@ -29,4 +43,4 @@ assemblyMergeStrategy in assembly := {
         oldStrategy(x)
 }
 
-assemblyJarName in assembly := "RSTrade.jar"
+assemblyJarName in assembly := Name + "-" + Version + ".jar"

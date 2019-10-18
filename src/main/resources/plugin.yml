@@ -1,9 +1,9 @@
 name: RSTrade
-main: xyz.janboerman.rstrade.RSTrade
+main: com.janboerman.rstrade.RSTrade
 version: 0.1
 author: Jannyboy11
 
-softdepend: ["vault"]
+softdepend: ["Vault"]
 
 commands:
   trade:

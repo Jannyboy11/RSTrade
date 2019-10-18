@@ -1,12 +1,11 @@
 # RSTrade
 
-RSTrade - Één op één handelen tussen spelers, geïmplementeerd in Scala!
-Deze plugin is nog lang niet af! :D
+One on one trading in Minecraft!
 
-### Compileren
+### Compiling
 
-##### Vereisten:
-- [JDK 8+](http://openjdk.java.net/install/)
+##### prerequisites:
+- [JDK 11+](http://openjdk.java.net/install/)
 - [SBT](https://www.scala-sbt.org/download.html)
 
-Run `sbt clean assembly` en de fat jar komt in je ./target/scala-2.12 map!
+Run `sbt assembly` and the deployable jar will be in your ./target/scala-2.13 folder!
