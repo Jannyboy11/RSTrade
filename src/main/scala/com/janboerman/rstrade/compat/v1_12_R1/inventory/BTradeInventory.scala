@@ -8,9 +8,6 @@ import org.bukkit.entity.Player
 
 object BTradeInventory {
 
-    //TODO use different button inventories
-    //TODO fill those with items (cause they can change?)
-    //TODO if they don't change, i can re-use a single one. TODO they actually will change #Sad
     private val buttons = new InventorySubcontainer(null, false, TradeInventory.SubHeigth)
 
     def make(playerOne: Player, playerTwo: Player)(implicit plugin: RSTrade): (BTradeInventory, BTradeInventory) = {

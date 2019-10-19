@@ -8,9 +8,9 @@ class InaccessibleSlot(inventory: IInventory, index: Int, xPos: Int, yPos: Int) 
     override def isAllowed(entityHuman: EntityHuman) = false
     override def set(itemStack: ItemStack): Unit = updateInventory()
 
-    override def getMaxStackSize: Int = 0                           //needed?
+    override def getMaxStackSize(): Int = 0                         //needed?
     override def getMaxStackSize(itemStack: ItemStack): Int = 0     //needed?
 
-    private def updateInventory() = f()
+    private def updateInventory(): Unit = f()
 
 }

@@ -20,6 +20,9 @@ class TradeGuiHolder(plugin: RSTrade, tradeInventory: TradeInventory) extends Gu
             val inventory = getInventory()
             inventory.setItem(4, Buttons.AcceptStack)
             inventory.setItem(49, Buttons.CancelStack)
+            for (i <- 13 to(40, 9)) {
+                inventory.setItem(i, plugin.getServerVersion().newFillerStack())
+            }
             firstTimeOpen = false
         }
     }

@@ -21,7 +21,8 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-    "org.spigotmc" % "spigot" % "1.12.2-R0.1-SNAPSHOT" % "provided",    //TODO update to just 1.15.0?
+    "org.spigotmc" % "spigot" % "1.12.2-R0.1-SNAPSHOT" % "provided",
+    //"org.spigotmc" % "spigot" % "1.14.4-R0.1-SNAPSHOT" % "provided",
     "com.github.MilkBowl" % "VaultAPI" % "1.7" % "provided",
     "com.github.Jannyboy11.GuiLib" % "GuiLib-API" % "v1.9.2",
 )
