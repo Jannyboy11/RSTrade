@@ -1,6 +1,7 @@
 package com.janboerman.rstrade
 
 import com.janboerman.rstrade.commands.{AcceptTradeExecutor, DeclineTradeExecutor, RequestTradeExecutor, TradeCommandExecutor}
+import com.janboerman.rstrade.compat.{ServerVersion, UnknownVersion, UnsupportedServerVersionException}
 import com.janboerman.rstrade.framework.TradePlayer._
 import com.janboerman.rstrade.listeners.{InventoryClickListener, InventoryCloseListener, PlayerPickupItemListener, PlayerQuitListener}
 import org.bukkit.plugin.java.JavaPlugin
@@ -22,6 +23,7 @@ class RSTrade extends JavaPlugin {
     RSTrade.setInstance(this)
 
     private lazy implicit val instance = this
+    private var serverVersion: ServerVersion = _
     private val guiListener = GuiListener.getInstance()
 
     lazy val economy : Option[Economy] = checkEconomy()
@@ -36,6 +38,8 @@ class RSTrade extends JavaPlugin {
 
     override def onEnable(): Unit = {
         val pluginManager = getServer.getPluginManager
+        serverVersion = ServerVersion.detect()
+        if (serverVersion == UnknownVersion) throw new UnsupportedServerVersionException(s"${getName} cannot run on server version ${getServer.getVersion}")
 
         //TODO create extension methods for PluginManager so that I don't need to pass the plugin instance?
         pluginManager.registerEvents(guiListener, this)
@@ -55,5 +59,7 @@ class RSTrade extends JavaPlugin {
             player.cancelTrade()
         }
     }
+
+    def getServerVersion(): ServerVersion = serverVersion
 
 }

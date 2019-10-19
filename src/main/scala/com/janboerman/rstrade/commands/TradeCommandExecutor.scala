@@ -3,7 +3,6 @@ package com.janboerman.rstrade.commands
 import com.janboerman.rstrade.RSTrade
 import org.bukkit.command.{Command, CommandExecutor, CommandSender}
 import org.bukkit.entity.Player
-import com.janboerman.rstrade.compat.newTradeInventories
 
 //TODO I might depend on ACF? :-)
 //TODO I kinda wanna do it, just to show off it works with Scala :-)
@@ -21,13 +20,10 @@ class TradeCommandExecutor(implicit plugin: RSTrade) extends CommandExecutor {
 
                         //TODO send a request instead.
                         //TODO the accept method should check whether this sender has no open inventory
-                        val (tradeInvOne, tradeInvTwo) = newTradeInventories(player, otherPlayer)
-
+                        val (tradeInvOne, tradeInvTwo) = plugin.getServerVersion().newTradeInventories(player, otherPlayer)
 
                         player.openInventory(tradeInvOne)
                         otherPlayer.openInventory(tradeInvTwo)
-
-
                     }
 
                     true

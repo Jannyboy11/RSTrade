@@ -16,14 +16,13 @@ packageOptions in (Compile, packageBin) +=
     Package.ManifestAttributes(("Automatic-Module-Name", Organisation + "." + Name.toLowerCase(Locale.ROOT)))
 
 resolvers ++= Seq(
-    "vault-repo" at "http://nexus.hc.to/content/repositories/pub_releases",
     "jitpack" at "https://jitpack.io",
     Resolver.mavenLocal,
 )
 
 libraryDependencies ++= Seq(
     "org.spigotmc" % "spigot" % "1.12.2-R0.1-SNAPSHOT" % "provided",    //TODO update to just 1.15.0?
-    "net.milkbowl.vault" % "VaultAPI" % "1.7" % "provided",
+    "com.github.MilkBowl" % "VaultAPI" % "1.7" % "provided",
     "com.github.Jannyboy11.GuiLib" % "GuiLib-API" % "v1.9.2",
 )
 

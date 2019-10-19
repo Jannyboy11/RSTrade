@@ -3,7 +3,6 @@ package com.janboerman.rstrade.commands
 import com.janboerman.rstrade.RSTrade
 import org.bukkit.command.Command
 import org.bukkit.entity.Player
-import com.janboerman.rstrade.compat.newTradeInventories
 import com.janboerman.rstrade.framework.TradePlayer._
 
 object AcceptTradeExecutor extends PlayerOnlyCommandExecutor {
@@ -30,7 +29,7 @@ object AcceptTradeExecutor extends PlayerOnlyCommandExecutor {
 
                     player.removeTradeRequestFrom(otherPlayer)
 
-                    val (tradeInvOne, tradeInvTwo) = newTradeInventories(player, otherPlayer)
+                    val (tradeInvOne, tradeInvTwo) = plugin.getServerVersion().newTradeInventories(player, otherPlayer)
                     player.openInventory(tradeInvOne)
                     otherPlayer.openInventory(tradeInvTwo)
                 }
