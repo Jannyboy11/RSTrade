@@ -6,7 +6,7 @@ import com.janboerman.rstrade.framework.TradeInventory
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-object Version_nms1_12_R1 extends ServerVersion {
+object NMS_1_12_R1 extends ServerVersion {
     override def newTradeInventories(playerOne: Player, playerTwo: Player)(implicit rSTrade: TradePlugin): (TradeInventory, TradeInventory) =
         inventory.BTradeInventory.make(playerOne, playerTwo)
 

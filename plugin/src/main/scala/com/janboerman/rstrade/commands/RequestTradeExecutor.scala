@@ -13,6 +13,11 @@ class RequestTradeExecutor(implicit val plugin: RSTrade) extends PlayerOnlyComma
                 if (otherPlayer == null) {
                     player.sendMessage("Player " + playerName + " is not online.")
                 } else {
+                    //TODO check if the player can see the target player
+
+                    //TODO send a request instead.
+                    //TODO the accept method should check whether this sender has no open inventory
+
                     val request = TradeRequest(player, otherPlayer)
                     request.sendMessage()
                 }

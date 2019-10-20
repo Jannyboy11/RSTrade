@@ -4,8 +4,6 @@ import com.janboerman.rstrade.RSTrade
 import org.bukkit.command.{Command, CommandExecutor, CommandSender}
 import org.bukkit.entity.Player
 
-//TODO I might depend on ACF? :-)
-//TODO I kinda wanna do it, just to show off it works with Scala :-)
 class TradeCommandExecutor(implicit plugin: RSTrade) extends CommandExecutor {
     override def onCommand(sender: CommandSender, command: Command, label: String, args: Array[String]): Boolean = {
         sender match {
@@ -16,10 +14,6 @@ class TradeCommandExecutor(implicit plugin: RSTrade) extends CommandExecutor {
                         sender.sendMessage(s"Player $playerName is not online.")
                     } else {
 
-                        //TODO check if the player can see the target player
-
-                        //TODO send a request instead.
-                        //TODO the accept method should check whether this sender has no open inventory
                         val (tradeInvOne, tradeInvTwo) = plugin.getServerVersion().newTradeInventories(player, otherPlayer)
 
                         player.openInventory(tradeInvOne)

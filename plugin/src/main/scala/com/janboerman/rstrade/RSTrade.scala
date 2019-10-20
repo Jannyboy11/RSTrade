@@ -2,7 +2,7 @@ package com.janboerman.rstrade
 
 import com.janboerman.rstrade.commands.{AcceptTradeExecutor, DeclineTradeExecutor, RequestTradeExecutor, TradeCommandExecutor}
 import com.janboerman.rstrade.compat.{ServerVersion, UnsupportedServerVersionException}
-import com.janboerman.rstrade.compat.v1_12_R1.Version_nms1_12_R1
+import com.janboerman.rstrade.compat.v1_12_R1.NMS_1_12_R1
 import com.janboerman.rstrade.extensions.TradePlayer._
 import com.janboerman.rstrade.listeners.{InventoryClickListener, InventoryCloseListener, PlayerPickupItemListener, PlayerQuitListener}
 import org.bukkit.plugin.java.JavaPlugin
@@ -62,7 +62,7 @@ class RSTrade extends JavaPlugin with TradePlugin {
 
     private def detectServerVersion(): Unit = {
         serverVersion = getServer.getClass.getName.split("\\.")(3) match {
-            case "v1_12_R1" => Version_nms1_12_R1
+            case "v1_12_R1" => NMS_1_12_R1
             case _ => null
         }
         if (serverVersion == null) throw new UnsupportedServerVersionException(s"${getName} cannot run on server version ${getServer.getVersion}")
